@@ -5,10 +5,15 @@
 - [本地启动与当前阻塞](docs/local-setup.md)
 - [公司服务器迁移](docs/deploy-company.md)
 - [信源状态CSV](docs/chip-source-registry.csv)
-- [评测与验收](docs/chip-evaluation.md)
+- [质量与成本评测](docs/chip-evaluation.md)
+- [一期验收矩阵与剩余工作](docs/phase-one-acceptance.md)
 - [改动与升级说明](docs/chip-changes.md)
 
-当前代码可构建，完整持续运营尚待Docker/PostgreSQL、真实模型与业务标注；截图为前端测试API。不要把试抓成功或种子启用等同数据库自动采集完成。
+私有仓库：[beijing-snail/chip-industry-insight](https://github.com/beijing-snail/chip-industry-insight)，默认分支`chip-insight-phase1`，保留原项目历史与upstream。
+
+本机Docker、PostgreSQL与真实网站已运行：<http://localhost:3000>，后台`/admin`；9个信源真实后台预览通过。最新网页回归61/61、容器备份恢复14/14通过。用户当前选择仅测试与整理，采集、模型调用及推送保持关闭；尚无新闻入库，真实内容质量和日/周/月刊仍待验收。密码在本机`.env`，不在仓库内。
+
+以下保留上游框架说明，示例站、截图与线上性能属于上游，不是本站实测；本项目部署先读上方本地启动和验收文档。
 
 ---
 
