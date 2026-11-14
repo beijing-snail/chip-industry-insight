@@ -1,0 +1,1174 @@
+{
+  "sources": [
+    {
+      "id": "S01",
+      "name": "NVIDIA开发者博客",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://developer.nvidia.com/blog/feed/",
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "nvidia",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://developer.nvidia.com/blog/feed/"
+    },
+    {
+      "id": "S02",
+      "name": "NVIDIA DRIVE（官方博客汽车栏目候选）",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://blogs.nvidia.com/blog/category/auto/feed/",
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "nvidia",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://blogs.nvidia.com/blog/category/auto/feed/"
+    },
+    {
+      "id": "S03",
+      "name": "AMD新闻",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://ir.amd.com/news-events/press-releases/rss",
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "amd",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://ir.amd.com/news-events/press-releases/rss"
+    },
+    {
+      "id": "S04",
+      "name": "Intel",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.intel.com/content/www/us/en/newsroom/home.html",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "intel",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.intel.com/content/www/us/en/newsroom/home.html"
+    },
+    {
+      "id": "S05",
+      "name": "Qualcomm",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.qualcomm.com/news/releases",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "qualcomm",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.qualcomm.com/news/releases"
+    },
+    {
+      "id": "S06",
+      "name": "Mobileye",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.mobileye.com/news/",
+        "parseMode": "html",
+        "itemSelector": "a[href*=\"/news/\"]",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        },
+        "allowUrlPrefixes": [
+          "https://www.mobileye.com/news/"
+        ]
+      },
+      "tier": "T1",
+      "owner_entity_id": "mobileye",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.mobileye.com/news/"
+    },
+    {
+      "id": "S07",
+      "name": "地平线",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.horizon.auto/",
+        "parseMode": "html",
+        "itemSelector": ".scsl-tit a",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        },
+        "allowUrlPrefixes": [
+          "https://www.horizon.auto/news/"
+        ]
+      },
+      "tier": "T1",
+      "owner_entity_id": "horizon",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.horizon.auto/"
+    },
+    {
+      "id": "S08",
+      "name": "黑芝麻智能",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.blacksesame.com/zh/news-center",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "black-sesame",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.blacksesame.com/zh/news-center"
+    },
+    {
+      "id": "S09",
+      "name": "爱芯元智",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.axera-tech.com/news",
+        "parseMode": "html",
+        "itemSelector": ".product_term a",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "a",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        },
+        "allowUrlPrefixes": [
+          "https://www.axera-tech.com/zh-hans/news/"
+        ],
+        "publishedAtRegex": "(20\\d{2}-\\d{2}-\\d{2})"
+      },
+      "tier": "T1",
+      "owner_entity_id": "axera",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.axera-tech.com/news"
+    },
+    {
+      "id": "S10",
+      "name": "新芯航途",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.xheart.com/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "xheart",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.xheart.com/"
+    },
+    {
+      "id": "S11",
+      "name": "昇腾",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.hiascend.com/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "huawei",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.hiascend.com/"
+    },
+    {
+      "id": "S12",
+      "name": "寒武纪",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.cambricon.com/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "cambricon",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.cambricon.com/"
+    },
+    {
+      "id": "S13",
+      "name": "阿里云技术",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.alibabacloud.com/blog",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "t-head",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.alibabacloud.com/blog"
+    },
+    {
+      "id": "S14",
+      "name": "PyTorch",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/pytorch/pytorch/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/pytorch/pytorch/releases"
+    },
+    {
+      "id": "S15",
+      "name": "TensorRT-LLM",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/NVIDIA/TensorRT-LLM/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "nvidia",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/NVIDIA/TensorRT-LLM/releases"
+    },
+    {
+      "id": "S16",
+      "name": "ONNX",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/onnx/onnx/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/onnx/onnx/releases"
+    },
+    {
+      "id": "S17",
+      "name": "LeRobot",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/huggingface/lerobot/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/huggingface/lerobot/releases"
+    },
+    {
+      "id": "S18",
+      "name": "arXiv Robotics",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://rss.arxiv.org/rss/cs.RO",
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://rss.arxiv.org/rss/cs.RO"
+    },
+    {
+      "id": "S19",
+      "name": "九识智能",
+      "kind": "web_list",
+      "config": {
+        "url": "https://official.zelostech.com.cn/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "zelos",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://official.zelostech.com.cn/"
+    },
+    {
+      "id": "S20",
+      "name": "新石器",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.neolix.net/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "neolix",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.neolix.net/"
+    },
+    {
+      "id": "S21",
+      "name": "宇树",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.unitree.com/",
+        "parseMode": "html",
+        "itemSelector": "a[href*=\"/news/\"]",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        },
+        "allowUrlPrefixes": [
+          "https://www.unitree.com/news/"
+        ]
+      },
+      "tier": "T1",
+      "owner_entity_id": "unitree",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.unitree.com/"
+    },
+    {
+      "id": "S22",
+      "name": "智元机器人",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.agibot.com.cn/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "agibot",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.agibot.com.cn/"
+    },
+    {
+      "id": "S23",
+      "name": "工信部",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.miit.gov.cn/",
+        "parseMode": "html",
+        "itemSelector": "a[href*=\"/art/2026/\"]",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        },
+        "allowUrlPrefixes": [
+          "https://www.miit.gov.cn/",
+          "http://www.miit.gov.cn/"
+        ]
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.miit.gov.cn/"
+    },
+    {
+      "id": "S24",
+      "name": "盖世汽车",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.gasgoo.com/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.gasgoo.com/"
+    },
+    {
+      "id": "S25",
+      "name": "机器之心",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.jiqizhixin.com/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.jiqizhixin.com/"
+    },
+    {
+      "id": "S26",
+      "name": "TrendForce",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.trendforce.com/",
+        "parseMode": "html",
+        "itemSelector": "a[href*=\"/presscenter/news/\"]",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.trendforce.com/"
+    },
+    {
+      "id": "S27",
+      "name": "SEMI",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.semi.org/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://www.semi.org/"
+    },
+    {
+      "id": "S28",
+      "name": "Tesla投资者关系",
+      "kind": "web_list",
+      "config": {
+        "url": "https://ir.tesla.com/",
+        "parseMode": "html",
+        "itemSelector": "article, .news-item, .news-list li, .press-release, .list-item",
+        "linkSelector": "a",
+        "titleSelector": "h2, h3, .title, a",
+        "publishedAtSelector": "time, .date",
+        "detail": {
+          "maxFetches": 2
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://ir.tesla.com/"
+    },
+    {
+      "id": "S29",
+      "name": "Intel OpenVINO",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/openvinotoolkit/openvino/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "intel",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/openvinotoolkit/openvino/releases"
+    },
+    {
+      "id": "S30",
+      "name": "ONNX Runtime",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/microsoft/onnxruntime/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "microsoft",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/microsoft/onnxruntime/releases"
+    },
+    {
+      "id": "S31",
+      "name": "vLLM",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/vllm-project/vllm/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/vllm-project/vllm/releases"
+    },
+    {
+      "id": "S32",
+      "name": "SGLang",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/sgl-project/sglang/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/sgl-project/sglang/releases"
+    },
+    {
+      "id": "S33",
+      "name": "NVIDIA TensorRT",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/NVIDIA/TensorRT/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "nvidia",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/NVIDIA/TensorRT/releases"
+    },
+    {
+      "id": "S34",
+      "name": "AMD ROCm",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/ROCm/ROCm/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "amd",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/ROCm/ROCm/releases"
+    },
+    {
+      "id": "S35",
+      "name": "Hugging Face Transformers",
+      "kind": "json_list",
+      "config": {
+        "url": "https://api.github.com/repos/huggingface/transformers/releases?per_page=10",
+        "mode": "json_api",
+        "titlePaths": [
+          "name",
+          "tag_name"
+        ],
+        "summaryPaths": [
+          "body"
+        ],
+        "publishedAtPath": "published_at",
+        "externalIdPath": "id",
+        "urlTemplate": "{raw:html_url}",
+        "requireBoolean": {
+          "path": "draft",
+          "equals": false
+        },
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "hugging-face",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://github.com/huggingface/transformers/releases"
+    },
+    {
+      "id": "S36",
+      "name": "NVIDIA官方新闻",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://nvidianews.nvidia.com/releases.xml",
+        "publishedAfter": "2026-11-01T00:00:00Z",
+        "_aihot": {
+          "initialBackfillLimit": 4
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "nvidia",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "候选"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false,
+      "enabled": false,
+      "original_url": "https://nvidianews.nvidia.com/releases.xml"
+    }
+  ]
+}

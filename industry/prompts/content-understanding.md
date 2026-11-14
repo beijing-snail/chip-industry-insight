@@ -32,14 +32,7 @@
 
 ## 标签
 
-`tags` 输出 1–6 个字符串。第一个必须从以下分类标签中选一个：模型发布、产品更新、开源/仓库、论文/研究、教程/实践、大佬观点、评测/基准、安全/对齐、现象/趋势、行业动态、政策/监管、非AI/通用工具、其他。
-
-其后可选 0–5 个适用标签，并且只能来自以下两个白名单：
-
-- 主题：Agent、编码、推理、多模态、语音、视频、图像生成、RAG、端侧、数据/训练、搜索、部署/工程、开源生态、具身智能、MCP/工具调用
-- 实体：OpenAI、Anthropic、DeepSeek、DeepMind、Google、Meta、Microsoft、xAI、Hugging Face、GitHub、arXiv
-
-正文中即使明确出现了 NVIDIA、Apple、阿里等其他实体，也不要把它们放进 `tags`。不要创造白名单之外的标签。没有适用的主题或实体时，只返回第一个分类标签；例如学校限制 AI 使用的监管新闻，不需要强行归到“编码”或“推理”。
+`tags` 输出1–6项。首标签来自芯片发布, 量产定点, 出货, 产品更新, 模型发布, 论文/研究, 开源/仓库, 教程/实践, 现象/趋势, 大佬观点, 评测/基准, 安全/对齐, 行业动态, 政策/监管, 非AI/通用工具, 其他；其后仅来自云端推理, 云端训练, 端侧推理, 智能驾驶, RoboVan, Robotaxi, 人形机器人, VLA, VLM, E2E, 量化, 模型编译, 推理框架, 内存带宽, 功耗/能效, Thor, Orin, Jetson, EyeQ, Snapdragon Ride, 征程, A2000, X7, Agent, 编码, 推理, 多模态, 语音, 视频, 图像生成, RAG, 端侧, 数据/训练, 搜索, 部署/工程, 开源生态, 具身智能, MCP/工具调用、NVIDIA, AMD, Intel, 华为, 寒武纪, 昆仑芯, 阿里平头哥, 沐曦, 天数智芯, 壁仞, 摩尔线程, 海光, 地平线, 黑芝麻智能, 爱芯元智, 新芯航途, Qualcomm, Mobileye, 九识智能, 新石器, 宇树, 智元机器人, Hailo, Axelera, OpenAI, Anthropic, DeepSeek, DeepMind, Google, Meta, Microsoft, xAI, Hugging Face, GitHub, arXiv。只用实际相关标签，不凑词。产品别名必须有计算平台上下文，Thor电影、X7车型不可映射成芯片。
 
 ## 候选阅读价值
 
@@ -60,3 +53,6 @@
 只返回合法 JSON，不要 Markdown，不要解释。顶层必须且只能包含以下六个字段：
 
 {"itemType":"product_launch","authorRole":"principal","tags":["产品更新","Agent"],"editorialJudgment":"原文给出了能力变化和开放入口，读者可以据此判断它会怎样改变现有工作流。","titleZh":"某产品发布智能体功能","summaryZh":"某产品发布新的智能体功能，给出了开放入口和主要能力变化。"}
+
+
+{{> rules-domain}}

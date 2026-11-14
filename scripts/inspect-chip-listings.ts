@@ -1,0 +1,5 @@
+import fs from 'node:fs/promises';
+import * as cheerio from 'cheerio';
+import {guardedFetch} from '../packages/backend/src/lib/http-fetch.ts';
+const {sources}=JSON.parse(await fs.readFile('industry/source-candidates.json','utf8'));let i=0;const out:any[]=[];
+await Promise.all(Array.from({length:5},async()=>{while(i<sources.length){const s=sources[i++];if(s.kind!=='web_list')continue;try{const r=await guardedFetch(s.config.url,{timeoutMs:12000});const $=cheerio.load(r.text());const links=$('a[href]').toArray().map(e=>({href:$(e).attr('href'),text:$(e).text().trim().replace(/\s+/g,' ').slice(0,130),selector:e.tagName+'.'+String($(e).attr('class')??''),parent:$(e).parent().get(0)?.tagName+'.'+$(e).parent().attr('class'),grandparent:$(e).parent().parent().attr('class')})).filter(x=>x.text.length>20&&/news|blog|press|detail|article|2026/i.test(x.href??''));out.push({id:s.id,status:r.status,links:links.slice(0,12)});}catch(e){out.push({id:s.id,error:String(e)});}}}));await fs.writeFile('../evidence/listing-inspection.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));process.exit(0);

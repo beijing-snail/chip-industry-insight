@@ -1,3 +1,17 @@
+# AI 芯片观察（一期行业版）
+
+本地行业定制，基于AIHOT，保留原有采集、双评分、归组、网站与管理员引擎。
+
+- [本地启动与当前阻塞](docs/local-setup.md)
+- [公司服务器迁移](docs/deploy-company.md)
+- [信源状态CSV](docs/chip-source-registry.csv)
+- [评测与验收](docs/chip-evaluation.md)
+- [改动与升级说明](docs/chip-changes.md)
+
+当前代码可构建，完整持续运营尚待Docker/PostgreSQL、真实模型与业务标注；截图为前端测试API。不要把试抓成功或种子启用等同数据库自动采集完成。
+
+---
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/banner-dark.png">

@@ -30,3 +30,6 @@ summary_zh: <80-160字、最多3句的中文摘要>
 
 正文内容：
 {{body}}
+
+
+{{> rules-domain}}

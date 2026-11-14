@@ -12,12 +12,46 @@
  * feedLabel 是分类 RSS 标题里的名字（不写就用 label）。公开接口、RSS 和 MCP 里要把一类并进另一类发布，写在站点设置里（site/site.ts 的 PUBLIC_CATEGORIES）。
  */
 export const CATEGORIES = [
-  { key: "ai-models", tagColor: "indigo", label: "模型", feedLabel: "AI 模型", section: "模型发布/更新", guide: "模型本身的发布、版本、权重开放、能力或价格变化，以及既有榜单上的模型成绩。公布一次跑分不是发布新基准，也不是教程。" },
-  { key: "ai-products", tagColor: "turquoise", label: "产品", feedLabel: "AI 产品", section: "产品发布/更新", guide: "可使用的 AI 产品、功能、应用、工具、API、平台和工程组件的发布更新。模型厂商发布的推理框架、算子库、硬件适配组件仍是产品，不能因为厂商名归成模型。" },
-  { key: "industry", tagColor: "orange", label: "行业", feedLabel: "行业动态", section: "行业动态", guide: "已发生的公司经营、融资并购、人事、合作、诉讼、政策、真实安全事故及调查进展。新闻由当事人发帖、带有态度，也不因此变成观点。" },
-  { key: "paper", tagColor: "violet", label: "论文", feedLabel: "论文", section: "论文研究", guide: "以新研究方法、实验设计与发现为核心的论文、技术报告、新基准或研究数据集。系统性红队实验属于研究；既有榜单成绩归模型，真实事故的新闻调查归行业。" },
-  { key: "tip", tagColor: "green", label: "教程", section: "技巧与观点", guide: "读者可以照着使用的方法、提示词、工具用法、工程实践复盘与技术讲解。重点是可复用的做法；单纯发布工具归产品，只有态度和预测而无做法归观点。", commentary: true },
-  { key: "opinion", tagColor: "purple", label: "观点", section: "技巧与观点", guide: "重点是作者的解释、判断、主张、预测、评论或访谈观点。讨论市场不自动归行业，作者是名人不自动归观点。", commentary: true },
+  {
+    "key": "chips-products",
+    "tagColor": "indigo",
+    "label": "芯片与产品",
+    "feedLabel": "芯片与产品",
+    "section": "芯片与产品",
+    "guide": "GPU/NPU/ASIC/SoC、模块、加速卡新品与实质迭代；工具链归技术与生态。"
+  },
+  {
+    "key": "market-business",
+    "tagColor": "orange",
+    "label": "市场与商业",
+    "feedLabel": "市场与商业",
+    "section": "市场与商业",
+    "guide": "定点、出货、订单、融资、并购、合作及供给变化；定点不等交付。"
+  },
+  {
+    "key": "technology-ecosystem",
+    "tagColor": "violet",
+    "label": "技术与生态",
+    "feedLabel": "技术与生态",
+    "section": "技术与生态",
+    "guide": "计算架构、推理框架、量化、编译与模型部署研究；模型需关联计算部署价值。"
+  },
+  {
+    "key": "applications",
+    "tagColor": "turquoise",
+    "label": "应用与场景",
+    "feedLabel": "应用与场景",
+    "section": "应用与场景",
+    "guide": "智驾、Robotaxi、RoboVan、机器人与具身智能中的计算需求；泛汽车资讯排除。"
+  },
+  {
+    "key": "policy-industry",
+    "tagColor": "blue",
+    "label": "政策与产业",
+    "feedLabel": "政策与产业",
+    "section": "政策与产业",
+    "guide": "直接影响计算芯片的政策、出口限制、标准、制程封装与存储供应链。"
+  }
 ] as const satisfies ReadonlyArray<{ key: string; tagColor: string; label: string; feedLabel?: string; section: string; guide: string; commentary?: true }>;
 
 /**
@@ -25,7 +59,7 @@ export const CATEGORIES = [
  * category 是类别，tag 是标签，两者都对上才算；unit 接在数字后面。
  * 没有这样一类的行业设成 null，报头就不显示这个数。
  */
-export const RELEASE: { category: string; tag: string; unit: string } | null = { category: "ai-models", tag: "模型发布", unit: "个新模型" };
+export const RELEASE: { category: string; tag: string; unit: string } | null = { category: "chips-products", tag: "芯片发布", unit: "项芯片发布" };
 
 /** 周报月报的总述可以直接写、不必在报道里找到出处的行业通用词（小写）。站名会自动算进去。 */
 export const PLAIN_TERMS: readonly string[] = ["ai", "api", "llm", "gpu", "agi", "ceo", "ipo"];
@@ -39,18 +73,18 @@ export const ITEM_TYPES = ["model_release", "product_launch", "tool_or_prompt", 
 // ── 标签词表 ────────────────────────────────────────────────────────────────────────────
 
 /** 每篇资料的第一个标签必须是这些“分类标签”之一。 */
-export const CATEGORY_TAGS = [
+export const CATEGORY_TAGS = ["芯片发布", "量产定点", "出货",
   "产品更新", "模型发布", "论文/研究", "开源/仓库", "教程/实践", "现象/趋势", "大佬观点", "评测/基准", "安全/对齐", "行业动态", "政策/监管",
   "非AI/通用工具", "其他",
 ] as const;
 
 /** 可选的主题标签。 */
-export const TOPIC_TAGS = [
+export const TOPIC_TAGS = ["云端推理", "云端训练", "端侧推理", "智能驾驶", "RoboVan", "Robotaxi", "人形机器人", "VLA", "VLM", "E2E", "量化", "模型编译", "推理框架", "内存带宽", "功耗/能效", "Thor", "Orin", "Jetson", "EyeQ", "Snapdragon Ride", "征程", "A2000", "X7",
   "Agent", "编码", "推理", "多模态", "语音", "视频", "图像生成", "RAG", "端侧", "数据/训练", "搜索", "部署/工程", "开源生态", "具身智能", "MCP/工具调用",
 ] as const;
 
 /** 可选的实体标签（公司、机构、平台）。 */
-export const ENTITY_TAGS = ["OpenAI", "Anthropic", "DeepSeek", "DeepMind", "Google", "Meta", "Microsoft", "xAI", "Hugging Face", "GitHub", "arXiv"] as const;
+export const ENTITY_TAGS = ["NVIDIA", "AMD", "Intel", "华为", "寒武纪", "昆仑芯", "阿里平头哥", "沐曦", "天数智芯", "壁仞", "摩尔线程", "海光", "地平线", "黑芝麻智能", "爱芯元智", "新芯航途", "Qualcomm", "Mobileye", "九识智能", "新石器", "宇树", "智元机器人", "Hailo", "Axelera", "OpenAI", "Anthropic", "DeepSeek", "DeepMind", "Google", "Meta", "Microsoft", "xAI", "Hugging Face", "GitHub", "arXiv"] as const;
 
 /** 模型常写的近义词，统一成词表里的写法。 */
 export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
@@ -74,6 +108,29 @@ export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
  * 所有这些名字都用来认出说的是哪家公司，比如把事实的主体对到发布方。
  */
 export const ENTITIES: Record<string, { name: string; displayTag: string | null; aliases: string[]; orgNames?: string[]; otherNames?: string[] }> = {
+"intel": {"name": "Intel", "displayTag": null, "aliases": ["Intel", "英特尔"], "orgNames": ["Intel", "英特尔"]},
+"huawei": {"name": "华为", "displayTag": null, "aliases": ["华为", "Huawei", "昇腾", "Ascend"], "orgNames": ["华为", "Huawei", "昇腾", "Ascend"]},
+"cambricon": {"name": "寒武纪", "displayTag": null, "aliases": ["寒武纪", "Cambricon"], "orgNames": ["寒武纪", "Cambricon"]},
+"kunlun": {"name": "昆仑芯", "displayTag": null, "aliases": ["昆仑芯", "Kunlunxin"], "orgNames": ["昆仑芯", "Kunlunxin"]},
+"t-head": {"name": "阿里平头哥", "displayTag": null, "aliases": ["平头哥", "T-Head"], "orgNames": ["平头哥", "T-Head"]},
+"metax": {"name": "沐曦", "displayTag": null, "aliases": ["沐曦", "MetaX"], "orgNames": ["沐曦", "MetaX"]},
+"iluvatar": {"name": "天数智芯", "displayTag": null, "aliases": ["天数智芯", "Iluvatar"], "orgNames": ["天数智芯", "Iluvatar"]},
+"biren": {"name": "壁仞", "displayTag": null, "aliases": ["壁仞", "Biren"], "orgNames": ["壁仞", "Biren"]},
+"moore": {"name": "摩尔线程", "displayTag": null, "aliases": ["摩尔线程", "Moore Threads"], "orgNames": ["摩尔线程", "Moore Threads"]},
+"hygon": {"name": "海光", "displayTag": null, "aliases": ["海光", "Hygon"], "orgNames": ["海光", "Hygon"]},
+"horizon": {"name": "地平线", "displayTag": null, "aliases": ["地平线", "Horizon Robotics"], "orgNames": ["地平线", "Horizon Robotics"]},
+"black-sesame": {"name": "黑芝麻智能", "displayTag": null, "aliases": ["黑芝麻智能", "Black Sesame"], "orgNames": ["黑芝麻智能", "Black Sesame"]},
+"axera": {"name": "爱芯元智", "displayTag": null, "aliases": ["爱芯元智", "Axera"], "orgNames": ["爱芯元智", "Axera"]},
+"xheart": {"name": "新芯航途", "displayTag": null, "aliases": ["新芯航途", "XHEART"], "orgNames": ["新芯航途", "XHEART"]},
+"qualcomm": {"name": "Qualcomm", "displayTag": null, "aliases": ["Qualcomm", "高通"], "orgNames": ["Qualcomm", "高通"]},
+"mobileye": {"name": "Mobileye", "displayTag": null, "aliases": ["Mobileye"], "orgNames": ["Mobileye"]},
+"zelos": {"name": "九识智能", "displayTag": null, "aliases": ["九识智能", "Zelos"], "orgNames": ["九识智能", "Zelos"]},
+"neolix": {"name": "新石器", "displayTag": null, "aliases": ["新石器", "Neolix"], "orgNames": ["新石器", "Neolix"]},
+"unitree": {"name": "宇树", "displayTag": null, "aliases": ["宇树", "Unitree"], "orgNames": ["宇树", "Unitree"]},
+"agibot": {"name": "智元机器人", "displayTag": null, "aliases": ["智元机器人", "Agibot"], "orgNames": ["智元机器人", "Agibot"]},
+"hailo": {"name": "Hailo", "displayTag": null, "aliases": ["Hailo"], "orgNames": ["Hailo"]},
+"axelera": {"name": "Axelera", "displayTag": null, "aliases": ["Axelera"], "orgNames": ["Axelera"]},
+
   "world-labs": { name: "World Labs", displayTag: null, aliases: ["World Labs"] },
   "thinking-machines": { name: "Thinking Machines Lab", displayTag: null, aliases: ["Thinking Machines"] },
   amd: { name: "AMD", displayTag: null, aliases: ["AMD", "Advanced Micro Devices"] },
@@ -99,6 +156,29 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
  * 行业没有这个问题时可以留空数组。
  */
 export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; patterns: RegExp[] }> = [
+  { id: "amd", name: "AMD", patterns: [/\bAMD\b|Advanced Micro Devices/i] },
+{ id: "intel", name: "Intel", patterns: [/Intel|英特尔/i] },
+{ id: "huawei", name: "华为", patterns: [/华为|Huawei|昇腾|Ascend/i] },
+{ id: "cambricon", name: "寒武纪", patterns: [/寒武纪|Cambricon/i] },
+{ id: "kunlun", name: "昆仑芯", patterns: [/昆仑芯|Kunlunxin/i] },
+{ id: "t-head", name: "阿里平头哥", patterns: [/平头哥|T\-Head/i] },
+{ id: "metax", name: "沐曦", patterns: [/沐曦|MetaX/i] },
+{ id: "iluvatar", name: "天数智芯", patterns: [/天数智芯|Iluvatar/i] },
+{ id: "biren", name: "壁仞", patterns: [/壁仞|Biren/i] },
+{ id: "moore", name: "摩尔线程", patterns: [/摩尔线程|Moore\ Threads/i] },
+{ id: "hygon", name: "海光", patterns: [/海光|Hygon/i] },
+{ id: "horizon", name: "地平线", patterns: [/地平线|Horizon\ Robotics/i] },
+{ id: "black-sesame", name: "黑芝麻智能", patterns: [/黑芝麻智能|Black\ Sesame/i] },
+{ id: "axera", name: "爱芯元智", patterns: [/爱芯元智|Axera/i] },
+{ id: "xheart", name: "新芯航途", patterns: [/新芯航途|XHEART/i] },
+{ id: "qualcomm", name: "Qualcomm", patterns: [/Qualcomm|高通/i] },
+{ id: "mobileye", name: "Mobileye", patterns: [/Mobileye/i] },
+{ id: "zelos", name: "九识智能", patterns: [/九识智能|Zelos/i] },
+{ id: "neolix", name: "新石器", patterns: [/新石器|Neolix/i] },
+{ id: "unitree", name: "宇树", patterns: [/宇树|Unitree/i] },
+{ id: "agibot", name: "智元机器人", patterns: [/智元机器人|Agibot/i] },
+{ id: "hailo", name: "Hailo", patterns: [/Hailo/i] },
+{ id: "axelera", name: "Axelera", patterns: [/Axelera/i] },
   { id: "openai", name: "OpenAI", patterns: [/openai|chatgpt|\bgpt-?[o\d]|\bsora\b|\bcodex\b/i] },
   { id: "anthropic", name: "Anthropic", patterns: [/anthropic|\bclaude\b/i, /\b(?:opus|sonnet|haiku)\s*\d+(?:[.\-]\d+)*\b/i, /\bfable\s*\d+(?:[.\-]\d+)*\b|\bmythos\b/i] },
   { id: "google", name: "Google / Gemini", patterns: [/google|deepmind|\bgemini\b|notebooklm|\bveo\s?\d|\bAlphaFold\b|\bAMIE\b/i] },
