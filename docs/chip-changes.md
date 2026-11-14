@@ -11,3 +11,7 @@ scripts/新增只读信源试抓、列表结构检查、配置/提示词验证�
 README.md增加本地行业版入口，保留上游说明、LICENSE与NOTICE。图标为本次自制几何图形，报头为可编辑文字SVG；没有使用AIHOT Logo作品牌，上游署名保留。
 
 环境模板.env.example默认采集和模型改为false；没有创建或修改真实.env。模型与收费采集必须经预算配置后再启用。
+
+## 本地启动阶段增量
+
+新增docker-compose.override.yml限制本机端口、compose.test.yml隔离测试数据库、check-local-runtime.ts检查真实认证/CSRF/后台预览、capture-local-pages.ts保存真实截图。补开源体裁主题（共43主题）及AMD/NVIDIA标签到企业主题的链接，测试示例同步为产业企业而非旧模型公司。未改采集/队列/鉴权引擎。实际.env与.env.test仅本地存在且忽略。持续采集未获自动审批放行，保持关闭。

@@ -1,0 +1,5 @@
+# Local-only host access. Company deployments can omit this file with -f docker-compose.yml.
+services:
+  web:
+    ports: !override
+      - "127.0.0.1:${PORT:-3000}:3000"

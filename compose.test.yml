@@ -1,0 +1,13 @@
+# Isolated local PostgreSQL for the upstream *_test suite; credentials in ignored .env.test.
+name: chip-insight-tests
+services:
+  testdb:
+    image: postgres:17-alpine
+    env_file: .env.test
+    ports:
+      - "127.0.0.1:55432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chip_test -d postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 30

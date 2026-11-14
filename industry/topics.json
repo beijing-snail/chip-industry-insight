@@ -202,7 +202,9 @@
       "entityId": "qualcomm",
       "aliases": [
         "Qualcomm",
-        "高通"
+        "高通",
+        "Qualcomm / 高通",
+        "高通 / Qualcomm"
       ],
       "definition": "Qualcomm公开的计算平台、产品与商业化进展；以原始披露阶段为准。"
     },
@@ -469,6 +471,15 @@
         "政策/监管"
       ],
       "definition": "政策与监管相关的公开信息。"
+    },
+    {
+      "slug": "open-source",
+      "name": "开源/仓库",
+      "group": "genre",
+      "tags": [
+        "开源/仓库"
+      ],
+      "definition": "计算框架、部署工具与公开代码进展。"
     }
   ]
 }
