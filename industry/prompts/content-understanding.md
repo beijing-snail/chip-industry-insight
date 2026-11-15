@@ -20,7 +20,7 @@
 
 优先级：发了模型选 model_release；发了工具选 product_launch；发了 Prompt 或方法选 tool_or_prompt；论文优先 research_paper；评测选 tutorial_explainer。原文把发布写成过去的事、本条在讲用法或做演示时，不算本次发布，选 tutorial_explainer。
 
-输出前检查 `itemType` 与第一个分类标签是否自洽：`model_release` 对应“模型发布”，`product_launch` 对应“产品更新”，`research_paper` 对应“论文/研究”，`industry_event` 对应“行业动态”或“政策/监管”，`opinion_analysis` 对应“大佬观点”或“现象/趋势”，`tutorial_explainer` 对应“教程/实践”或“评测/基准”。如果二者冲突，按当前材料的核心事件修正后再输出。
+输出前检查 `itemType` 与第一个分类标签是否自洽：`model_release` 对应“模型发布”，`product_launch` 在明确芯片新品时对应“芯片发布”，其他产品对应“产品更新”；`research_paper` 对应“论文/研究”，`industry_event` 对应“量产定点”“出货”“行业动态”或“政策/监管”，`opinion_analysis` 对应“大佬观点”或“现象/趋势”，`tutorial_explainer` 对应“教程/实践”或“评测/基准”。如果二者冲突，按当前材料的核心事件修正后再输出。
 
 ## 作者角色
 
@@ -33,6 +33,8 @@
 ## 标签
 
 `tags` 输出1–6项。首标签来自芯片发布, 量产定点, 出货, 产品更新, 模型发布, 论文/研究, 开源/仓库, 教程/实践, 现象/趋势, 大佬观点, 评测/基准, 安全/对齐, 行业动态, 政策/监管, 非AI/通用工具, 其他；其后仅来自云端推理, 云端训练, 端侧推理, 智能驾驶, RoboVan, Robotaxi, 人形机器人, VLA, VLM, E2E, 量化, 模型编译, 推理框架, 内存带宽, 功耗/能效, Thor, Orin, Jetson, EyeQ, Snapdragon Ride, 征程, A2000, X7, Agent, 编码, 推理, 多模态, 语音, 视频, 图像生成, RAG, 端侧, 数据/训练, 搜索, 部署/工程, 开源生态, 具身智能, MCP/工具调用、NVIDIA, AMD, Intel, 华为, 寒武纪, 昆仑芯, 阿里平头哥, 沐曦, 天数智芯, 壁仞, 摩尔线程, 海光, 地平线, 黑芝麻智能, 爱芯元智, 新芯航途, Qualcomm, Mobileye, 九识智能, 新石器, 宇树, 智元机器人, Hailo, Axelera, OpenAI, Anthropic, DeepSeek, DeepMind, Google, Meta, Microsoft, xAI, Hugging Face, GitHub, arXiv。只用实际相关标签，不凑词。产品别名必须有计算平台上下文，Thor电影、X7车型不可映射成芯片。
+
+发布类标签按原文明确的对象选择“芯片发布”“模型发布”或“产品更新”，不使用含糊的“发布”；对象不明确时用“其他”，不从企业名或同名型号补猜。
 
 ## 候选阅读价值
 

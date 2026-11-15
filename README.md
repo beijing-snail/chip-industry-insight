@@ -8,11 +8,14 @@
 - [质量与成本评测](docs/chip-evaluation.md)
 - [一期验收矩阵与剩余工作](docs/phase-one-acceptance.md)
 - [真实信源与Codex模型实测](docs/source-and-model-test.md)
+- [单次真实采集与展示结果](docs/oneoff-collection.md)
+- [与AIHOT原版的功能对比及完善建议](docs/upstream-comparison.md)
+- [问题修复与验证记录](docs/repair-validation.md)
 - [改动与升级说明](docs/chip-changes.md)
 
 私有仓库：[beijing-snail/chip-industry-insight](https://github.com/beijing-snail/chip-industry-insight)，默认分支`chip-insight-phase1`，保留原项目历史与upstream。
 
-本机Docker、PostgreSQL与真实网站已运行：<http://localhost:3000>，后台`/admin`；9个信源真实后台预览通过。最新网页回归61/61、容器备份恢复14/14通过。用户当前选择仅测试与整理，采集、模型调用及推送保持关闭；尚无新闻入库，真实内容质量和日/周/月刊仍待验收。另已用Codex额度完成独立测试库内6次真实推理，详情见实测报告。密码在本机`.env`，不在仓库内。
+本机Docker、PostgreSQL与真实网站已运行：<http://localhost:3000>，后台`/admin`。按用户单次授权，9源最终入库16条真实资料，3条取得模型结果（15次Codex请求），2条在首页展示。已修复Intel误识别、模糊发布标签、重复任务及关闭模型的重试问题，并修正日报评论体裁处理；既有NVIDIA结果已恢复完成，未新增推理。持续采集、模型及推送仍关闭；真实内容质量、多源聚合和日/周/月刊仍待验收。详见修复记录。密码在本机`.env`，不在仓库内。
 
 以下保留上游框架说明，示例站、截图与线上性能属于上游，不是本站实测；本项目部署先读上方本地启动和验收文档。
 

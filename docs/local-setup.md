@@ -4,7 +4,7 @@
 
 ## 前置条件与权限
 
-需Docker Desktop/Compose、Node >=24.22.1。本机安装、配置和新库初始化已获明确授权并完成。以下还包括未来启用运营的步骤；用户最新决定暂不开启持续采集，仅继续测试与整理。模型和推送同样关闭。
+需Docker Desktop/Compose、Node >=24.22.1。本机安装、配置和新库初始化已获明确授权并完成。以下还包括未来启用运营的步骤；用户已授权一次有界采集，持续采集、模型和推送仍关闭。单次结果见[单次记录](oneoff-collection.md)，队列等修复见[修复记录](repair-validation.md)。
 
 1. 进入app目录。复制.env.example为.env并在本机编辑，填写独立管理员密码、SESSION_SECRET、IMG_PROXY_SIGN_SECRET、POSTGRES_PASSWORD；模型地址/型号/key由使用者选择。密钥不要发到聊天、Git或命令行参数。
 2. 在.env确认SITE_URL=http://localhost:3000。首次设置COLLECT_ENABLED=false、MODEL_CALLS_ENABLED=false；所有FEISHU、DINGTALK、INDEXNOW、BAIDU发送开关保持false；不要设置DEV_AUTH_ROLE=admin。
@@ -25,7 +25,7 @@ industry/sources.json只补不存在的ID，不会覆盖数据库里旧行；调
 
 ## 本机实况补充
 
-Docker客户端路径为/Applications/Docker.app/Contents/Resources/bin/docker；项目名chip-insight-local。docker-compose.override.yml限定127.0.0.1端口。后台密码仅存.env；9个后台预览通过，业务库未采集文章。宿主完整数据库测试1128/1141通过，13项缺pg_dump；容器内客户端存在，不能据此声称宿主备份测试通过。
+Docker客户端路径为/Applications/Docker.app/Contents/Resources/bin/docker；项目名chip-insight-local。docker-compose.override.yml限定127.0.0.1端口。后台密码仅存.env；9源单次最终入库16条，首页有2条精选；Codex测试桥接已退出，不是常驻模型后端。宿主完整数据库测试1128/1141通过，13项缺pg_dump；容器内客户端存在，不能据此声称宿主备份测试通过。
 
 ## 本轮测试补充
 

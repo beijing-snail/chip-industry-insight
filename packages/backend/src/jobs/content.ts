@@ -116,8 +116,14 @@ export async function settleNonEditorial(articleId: string): Promise<{ group: bo
 }
 
 async function processingInput(articleId: string) {
-  const [row] = await sql<{ participation_mode: string; revision: number; backfill: boolean; published_at: Date | null; discovered_at: Date }[]>`
-    SELECT s.participation_mode, a.revision, a.backfill, a.published_at, a.discovered_at FROM articles a JOIN sources s ON s.id = a.source_id WHERE a.id = ${articleId}`;
+  const [row] = await sql<{ participation_mode: string; revision: number; backfill: boolean; published_at: Date | null; discovered_at: Date;
+    processing_attempt_tag: string | null; analysis_id: number | null; analysis_attempt_tag: string | null; relevance: string | null }[]>`
+    SELECT s.participation_mode, a.revision, a.backfill, a.published_at, a.discovered_at, a.processing_attempt_tag,
+           an.id AS analysis_id, an.output->>'attemptTag' AS analysis_attempt_tag, an.relevance
+    FROM articles a JOIN sources s ON s.id = a.source_id
+    LEFT JOIN LATERAL (SELECT id, output, relevance FROM analyses
+      WHERE article_id = a.id AND input_revision = a.revision AND origin = 'model' ORDER BY id DESC LIMIT 1) an ON true
+    WHERE a.id = ${articleId}`;
   return row ? { ...row, historical: isHistorical(row) } : null;
 }
 
@@ -129,11 +135,22 @@ async function processingInput(articleId: string) {
 export async function processArticle(articleId: string, opts: { attemptTag?: string } = {}): Promise<{ state: string; retryAt?: Date }> {
   const row = await processingInput(articleId);
   if (!row) return { state: "missing" };
+  if (opts.attemptTag && row.processing_attempt_tag && opts.attemptTag !== row.processing_attempt_tag) return { state: "stale" };
   try {
-    return await processRevision(articleId, row, opts);
+    return await processRevision(articleId, row, { attemptTag: opts.attemptTag ?? row.processing_attempt_tag ?? undefined });
   } catch (error) {
     return afterFailure(articleId, row.revision, error);
   }
+}
+
+async function finishProcessing(articleId: string, row: NonNullable<Awaited<ReturnType<typeof processingInput>>>, relevance: string) {
+  await publishArticle(articleId);
+  if (needsGrouping({ participationMode: row.participation_mode, historical: row.historical, relevance })) await enqueue(QUEUES.group, { articleId }, { singletonKey: articleId, priority: groupingPriority({ signal: false, historical: row.historical }) });
+  await sql`UPDATE articles SET processing_state = ${relevance === "block" ? "blocked" : "analyzed"}, processing_error = NULL,
+            processing_attempts = 0, processing_retry_at = NULL, processing_queued_at = NULL
+            WHERE id = ${articleId} AND revision = ${row.revision}
+              AND processing_attempt_tag IS NOT DISTINCT FROM ${row.processing_attempt_tag}`;
+  return { state: relevance };
 }
 
 async function processRevision(articleId: string, row: NonNullable<Awaited<ReturnType<typeof processingInput>>>, opts: { attemptTag?: string }): Promise<{ state: string }> {
@@ -144,6 +161,11 @@ async function processRevision(articleId: string, row: NonNullable<Awaited<Retur
     return { state: "skipped" };
   }
   try {
+    // A collection job may arrive after the same revision was processed manually. Finish its
+    // publication/grouping without buying analysis again; a new explicit evaluation still runs.
+    if (row.analysis_id !== null && row.relevance !== null && (!opts.attemptTag || row.analysis_attempt_tag === opts.attemptTag)) {
+      return await finishProcessing(articleId, row, row.relevance);
+    }
     const result = await analyzeArticle(articleId, { attemptTag: opts.attemptTag });
     if (!result) return { state: "missing" };
     // Only a title or a feed summary: the article page first; extraction queues the analysis again.
@@ -152,11 +174,7 @@ async function processRevision(articleId: string, row: NonNullable<Awaited<Retur
       return { state: "fetching-body" };
     }
     if (result.stale) return { state: "stale" }; // the newer revision has its own job
-    await publishArticle(articleId);
-    if (needsGrouping({ participationMode: row.participation_mode, historical: row.historical, relevance: result.output.relevance })) await enqueue(QUEUES.group, { articleId }, { singletonKey: articleId, priority: groupingPriority({ signal: false, historical: row.historical }) });
-    await sql`UPDATE articles SET processing_attempts = 0, processing_retry_at = NULL, processing_queued_at = NULL
-              WHERE id = ${articleId} AND revision = ${row.revision}`;
-    return { state: result.output.relevance };
+    return await finishProcessing(articleId, row, result.output.relevance);
   } catch (error) {
     if (shutdownSignal.signal.aborted) throw error;
     if (failureKind(error) === "unknown") {
@@ -176,8 +194,8 @@ async function afterFailure(articleId: string, revision: number, error: unknown)
   if (shutdownSignal.signal.aborted) throw error;
   const message = String(error instanceof Error ? error.message : error).slice(0, 500);
   const kind = failureKind(error);
-  if (kind === "busy" || kind === "budget") {
-    // Not the article's fault: the same request is in flight, or the budget window is full.
+  if (kind === "busy" || kind === "budget" || kind === "off") {
+    // Provider availability and an intentionally closed valve do not spend article retries.
     const seconds = error instanceof BudgetExceededError ? error.retryAfterSeconds : 60;
     const retryAt = new Date(Date.now() + seconds * 1000);
     await sql`UPDATE articles SET processing_state = 'new', processing_error = ${message}, processing_retry_at = ${retryAt}, processing_queued_at = NULL

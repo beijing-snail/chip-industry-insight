@@ -5,6 +5,8 @@ import assert from "node:assert/strict";
 import { setTimeout as delay } from "node:timers/promises";
 import { after, afterEach, before, test } from "node:test";
 import { closeDb, sql } from "@aihot/backend/db";
+import { config } from "@aihot/backend/config";
+import { analyzeArticle } from "@aihot/backend/editorial/analyze";
 import { groupArticle } from "@aihot/backend/events/group";
 import { upsertMaterial } from "@aihot/backend/content/materials";
 import { rerun } from "@aihot/backend/admin/content";
@@ -225,4 +227,59 @@ test("historical analysis queues a free identity confirmation behind live news",
   assert.equal(provider.hits(), hits, "historical grouping calls no model");
   const [a] = await sql`SELECT grouping_status FROM articles WHERE id=${id}`;
   assert.equal(a!.grouping_status, "complete");
+});
+
+test("a collection job reuses a manually completed revision even while models are off", async () => {
+  const id = await article("completed-oneoff");
+  original = false;
+  refuseScore = false;
+  assert.equal((await analyzeArticle(id, { attemptTag: `oneoff:${T}` }))?.output?.relevance, "pass");
+  const hits = provider.hits();
+  config.modelCallsEnabled = false;
+  try {
+    for (let i = 0; i < 3; i++) assert.equal((await processArticle(id)).state, "pass");
+    const [row] = await sql`SELECT processing_state,processing_attempts,processing_error,processing_retry_at FROM articles WHERE id=${id}`;
+    assert.deepEqual(row, { processing_state: "analyzed", processing_attempts: 0, processing_error: null, processing_retry_at: null });
+    assert.equal((await sql`SELECT 1 FROM analyses WHERE article_id=${id}`).length, 1);
+    assert.equal((await sql`SELECT eligible FROM publications WHERE article_id=${id}`)[0]!.eligible, true);
+    assert.equal(provider.hits(), hits, "duplicate jobs must not buy new requests");
+  } finally { config.modelCallsEnabled = true; }
+});
+
+test("a closed model valve waits without exhausting article retries and resumes when opened", async () => {
+  const id = await article("model-off");
+  const hits = provider.hits();
+  config.modelCallsEnabled = false;
+  try {
+    for (let i = 0; i < 12; i++) assert.equal((await processArticle(id)).state, "waiting");
+    const [row] = await sql`SELECT processing_state,processing_attempts FROM articles WHERE id=${id}`;
+    assert.deepEqual(row, { processing_state: "new", processing_attempts: 0 });
+    assert.equal(provider.hits(), hits);
+  } finally { config.modelCallsEnabled = true; }
+  original = true;
+  assert.equal((await processArticle(id)).state, "block");
+});
+
+test("pending manual evaluation supersedes an old verdict; completed evaluation is reusable but not across revisions", async () => {
+  const id = await article("evaluation-revision");
+  original = true;
+  await processArticle(id);
+  const attemptTag = `manual:${T}`;
+  await sql`UPDATE articles SET processing_state='new',processing_attempt_tag=${attemptTag} WHERE id=${id}`;
+  config.modelCallsEnabled = false;
+  try { assert.equal((await processArticle(id)).state, "waiting", "the old verdict must not finish a new evaluation"); }
+  finally { config.modelCallsEnabled = true; }
+  original = false;
+  refuseScore = false;
+  assert.equal((await processArticle(id)).state, "pass", "an untagged queued job adopts the pending manual evaluation");
+  const hits = provider.hits();
+  config.modelCallsEnabled = false;
+  try {
+    assert.equal((await processArticle(id, { attemptTag: `superseded:${T}` })).state, "stale", "an older queued evaluation cannot replace the current one");
+    assert.equal((await processArticle(id, { attemptTag })).state, "pass");
+    await upsertMaterial({ sourceId: SOURCE, url: `https://example.org/${T}/evaluation-revision`, title: `Changed material ${T}`,
+      bodyText: "New facts requiring a different evaluation. ".repeat(30), bodyStatus: "ok", via: "fetch", publishedAt: new Date() });
+    assert.equal((await processArticle(id)).state, "waiting", "a new material revision cannot reuse the previous verdict");
+    assert.equal(provider.hits(), hits);
+  } finally { config.modelCallsEnabled = true; }
 });

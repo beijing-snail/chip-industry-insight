@@ -21,6 +21,7 @@ import { stopBoss } from "@aihot/backend/jobs/queue";
 import { publishArticle } from "@aihot/backend/publication/publish";
 import { firstDaily, loadReport, v1Daily } from "@aihot/backend/publication/reports";
 import { composeDaily } from "@aihot/backend/reports/compose";
+import { arrangeDaily, dailyEdition } from "@aihot/backend/reports/edition";
 import { mergeStoryInto } from "@aihot/backend/events/merge";
 import { buildApp } from "../apps/api/src/app.ts";
 
@@ -70,6 +71,29 @@ async function content(date: string): Promise<Content> {
   return r!.content;
 }
 const carried = (c: Content) => [...c.sections.flatMap((s) => s.items), ...c.flashes, ...(c.picks ?? [])].map((i) => i.itemId);
+
+test("industry categories preserve commentary follow-ups without demoting actual product developments", async () => {
+  const day = "2021-02-10";
+  const official = `highlights-official-${T}`;
+  await sql`INSERT INTO sources (id,name,kind,tier,participation_mode,next_fetch_at)
+    VALUES (${official},'Official','rss','T1','editorial','2100-01-01')`;
+  const prior = await report("此前发布的产品", hoursBefore(day, 30), 90, true, official);
+  const story = await fact([prior]);
+  await composeDaily("2021-02-09");
+  const fresh = await report("本期新事件", hoursBefore(day, 3), 92, true, OTHER);
+  await fact([fresh]);
+  const follow = await report("原产品的技术讲解", hoursBefore(day, 2), 85, true, official);
+  await fact([follow], story);
+  for (const itemType of ["tutorial_explainer", "opinion_analysis", "product_launch"]) {
+    await sql`UPDATE analyses SET category='technology-ecosystem',output=${sql.json({ itemType })} WHERE article_id=${follow}`;
+    await publishArticle(follow, { now: hoursBefore(day, 2), releasedAt: hoursBefore(day, 2) });
+    const edition = await dailyEdition(day, hoursBefore(day, 24), hoursBefore(day, 0));
+    assert.equal(edition.entries.find(e => e.entry.itemId === follow)?.itemType, itemType);
+    const arranged = arrangeDaily(edition.entries);
+    assert.equal(arranged.main.some(e => e.entry.itemId === follow), itemType === "product_launch", itemType);
+    assert.equal(arranged.flashes.some(e => e.entry.itemId === follow), itemType !== "product_launch", itemType);
+  }
+});
 
 test("a thin issue fills its highlights with the window's best reports it left out, the same on every outlet", async () => {
   const day = "2021-03-09";

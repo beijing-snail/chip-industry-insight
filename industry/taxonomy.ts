@@ -94,7 +94,7 @@ export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
   论文: "论文/研究", 研究: "论文/研究", paper: "论文/研究", papers: "论文/研究",
   "open-source": "开源/仓库", 开源: "开源/仓库", 仓库: "开源/仓库", repo: "开源/仓库",
   教程: "教程/实践", 玩法: "教程/实践", 指南: "教程/实践", 技巧: "教程/实践", 最佳实践: "教程/实践", 实践: "教程/实践",
-  产品: "产品更新", 更新: "产品更新", 发布: "模型发布", 模型: "模型发布", 趋势: "现象/趋势", 现象: "现象/趋势", 观点: "大佬观点",
+  产品: "产品更新", 更新: "产品更新", 模型: "模型发布", 趋势: "现象/趋势", 现象: "现象/趋势", 观点: "大佬观点",
   视频生成: "视频", 非ai: "非AI/通用工具", "non-ai": "非AI/通用工具", 通用工具: "非AI/通用工具", 工程工具: "非AI/通用工具",
   安全扫描: "非AI/通用工具", devops: "非AI/通用工具", 行业: "行业动态", 动态: "行业动态",
 };
@@ -157,7 +157,7 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
  */
 export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; patterns: RegExp[] }> = [
   { id: "amd", name: "AMD", patterns: [/\bAMD\b|Advanced Micro Devices/i] },
-{ id: "intel", name: "Intel", patterns: [/Intel|英特尔/i] },
+{ id: "intel", name: "Intel", patterns: [/\bIntel\b|英特尔/i] },
 { id: "huawei", name: "华为", patterns: [/华为|Huawei|昇腾|Ascend/i] },
 { id: "cambricon", name: "寒武纪", patterns: [/寒武纪|Cambricon/i] },
 { id: "kunlun", name: "昆仑芯", patterns: [/昆仑芯|Kunlunxin/i] },

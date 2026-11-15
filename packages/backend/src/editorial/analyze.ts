@@ -568,6 +568,7 @@ export async function analyzeArticle(articleId: string, opts: StepOpts = {}): Pr
   ];
   const w = run.writing;
   const detail = {
+    attemptTag: opts.attemptTag ?? null,
     prefilter: run.prefilter && { label: run.prefilter.label, reason: run.prefilter.reason },
     scores: out.scores, scoreModel: out.scoreModel, threshold: out.threshold, ...(out.scoreRefused ? { scoreRefused: true } : {}),
     ...(w ? { writer: w.kind, writerModel: w.model, itemType: w.itemType ?? null, authorRole: w.authorRole ?? null } : {}),

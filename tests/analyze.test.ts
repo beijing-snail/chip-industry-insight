@@ -12,12 +12,34 @@ import { analyzeArticle, buildMaterial, loadAnalyzeInput, normalizeStructure, se
 import { createSource, updateSource } from "@aihot/backend/admin/sources";
 import { queueProcessing } from "@aihot/backend/jobs/content";
 import { QUEUES, stopBoss } from "@aihot/backend/jobs/queue";
-import { compactAnswerFirstSummary, enforceIdentity, MAX_BODY_CHARS, parseTranslateOutput } from "@aihot/backend/editorial/writing";
+import { compactAnswerFirstSummary, enforceIdentity, matchEntityIds, MAX_BODY_CHARS, parseTranslateOutput } from "@aihot/backend/editorial/writing";
+import { isRelease, normalizeTags } from "@aihot/backend/editorial/vocabulary";
 import { READER_WORDING } from "@aihot/industry/wording";
 import { SELECTION } from "@aihot/industry/selection";
 import { ITEM_TYPES } from "@aihot/industry/taxonomy";
 
 const T = tag();
+
+test("identity checks do not mistake intelligence for a chip vendor", () => {
+  assert.deepEqual(matchEntityIds(["Artificial intelligence inference"]), []);
+  for (const text of ["Intel announces a processor", "Intel® Xeon", "英特尔发布芯片"]) assert.ok(matchEntityIds([text]).includes("intel"), text);
+  const guarded = enforceIdentity({ title: "Artificial intelligence inference", text: "A new inference technique.", sourceKind: "rss" },
+    { titleZh: "Intel 发布芯片", summaryZh: "英特尔推出新处理器。" });
+  assert.equal(guarded.identityGuard.outcome, "fallback");
+  assert.deepEqual(guarded.identityGuard.unsupportedTitleEntityIds, ["intel"]);
+});
+
+test("an ambiguous launch tag cannot invent a model or chip release", () => {
+  const ambiguous = normalizeTags(["发布", "NVIDIA", "Thor"]);
+  assert.equal(ambiguous[0], "其他");
+  assert.equal(isRelease("chips-products", ambiguous), false);
+  assert.equal(isRelease("chips-products", normalizeTags(["芯片发布", "NVIDIA", "Thor"])), true);
+  for (const tag of ["模型发布", "产品更新"]) {
+    assert.equal(normalizeTags([tag])[0], tag);
+    assert.equal(isRelease("chips-products", normalizeTags([tag])), false);
+  }
+  assert.equal(normalizeTags(["发布", "芯片发布"])[0], "芯片发布");
+});
 const SOURCE = `test-analyze-${T}`;
 const X_SOURCE = `test-analyze-x-${T}`;
 const CLASSED_SOURCE = `test-analyze-classed-${T}`;

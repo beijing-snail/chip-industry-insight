@@ -73,6 +73,7 @@ export interface DailyEntry extends ReportEntry {
 export interface EditionEntry {
   entry: DailyEntry;
   category: string | null;
+  itemType?: string | null;
   tags: string[];
   storyId: number | null;
   /** For an entry without an event of its own (a roundup): the events it mentions. */
@@ -88,11 +89,12 @@ export interface EditionEntry {
 type ReportRow = RepresentativeIdentity & {
   id: string; title: string; summary: string | null; url: string; category: string | null; tags: string[]; score: number | null;
   first_party: boolean; body_mode: "full" | "summary"; timeline_at: Date;
-  source_id: string; source_name: string; source_kind: string;
+  source_id: string; source_name: string; source_kind: string; item_type: string | null;
   fact_id: number | null; fact_public_id: string | null; story_id: number | null; story_public_id: string | null;
 };
 
 const REPORT_FIELDS = sql`p.article_id AS id, p.title, p.summary, p.url, p.category, p.tags, p.score, (s.tier = 'T1') AS first_party, p.body_mode, p.timeline_at,
+  (SELECT an.output->>'itemType' FROM analyses an WHERE an.id = p.analysis_id) AS item_type,
   ${REPRESENTATIVE_COLUMNS}, s.id AS source_id, s.name AS source_name, s.kind AS source_kind,
   f.id AS fact_id, f.public_id AS fact_public_id, st.id AS story_id, st.public_id::text AS story_public_id`;
 
@@ -395,7 +397,7 @@ export async function dailyEdition(date: string, start: Date, end: Date): Promis
     };
     const ids = new Set(fs.flatMap((f) => f.rows.map((r) => r.id)));
     return {
-      entry, category: rep.category, tags: rep.tags, storyId, sourceIds, authority: representativePriority(rep), previous,
+      entry, category: rep.category, itemType: rep.item_type, tags: rep.tags, storyId, sourceIds, authority: representativePriority(rep), previous,
       mentions: new Set(storyId === null ? named.filter((n) => ids.has(n.article_id)).map((n) => n.story_id) : []),
       importance: importance({
         score,
@@ -436,7 +438,8 @@ export function arrangeDaily(entries: EditionEntry[]): { main: EditionEntry[]; f
     const related = [...(e.entry.related ?? []), ...roundups.flatMap((r) => [asRelated(r.entry), ...(r.entry.related ?? [])])];
     return { ...e, sourceIds, entry: { ...e.entry, sources: sourceIds.size, related } };
   });
-  const earned = (e: EditionEntry) => !e.previous || (e.authority < 3 && !COMMENTARY.has(e.category ?? "")) || e.entry.sources >= FOLLOW_UP_SOURCES;
+  const commentary = (e: EditionEntry) => COMMENTARY.has(e.category ?? "") || e.itemType === "tutorial_explainer" || e.itemType === "opinion_analysis";
+  const earned = (e: EditionEntry) => !e.previous || (e.authority < 3 && !commentary(e)) || e.entry.sources >= FOLLOW_UP_SOURCES;
   // A day of nothing but follow-ups still has entries in full.
   const full = live.some(earned) ? earned : () => true;
   const main: EditionEntry[] = [];
